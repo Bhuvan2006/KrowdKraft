@@ -264,13 +264,13 @@ export default function CommunityHero() {
           >
             {[
               { 
-                number: "900+", 
+                number: "1000+", 
                 label: "Members", 
                 icon: Users,
                 color: "text-blue-400"
               },
               { 
-                number: "6", 
+                number: "10+", 
                 label: "Events", 
                 icon: PlusCircle,
                 color: "text-purple-400"
