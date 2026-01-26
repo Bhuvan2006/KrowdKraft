@@ -273,7 +273,7 @@ export default function Footer() {
             className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0"
           >
             <div className="text-sm text-muted-foreground">
-              © 2025 KrowdKraft. All rights reserved. | Made with 💜 for Gen Z
+              © 2026 KrowdKraft. All rights reserved. | Made with 💜 for Gen Z
             </div>
             
             <div className="flex space-x-6 text-sm">
