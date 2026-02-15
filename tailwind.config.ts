@@ -18,6 +18,9 @@ const config: Config = {
       },
     },
     extend: {
+      screens: {
+        "nav-break": "1166px",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

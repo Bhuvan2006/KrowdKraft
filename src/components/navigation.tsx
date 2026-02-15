@@ -110,7 +110,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden nav-break:flex items-center space-x-8">
             {navItems.map((item) => {
               const isRoute = item.href.startsWith("/");
               const isActive = isRoute ? pathname === item.href : activeSection === item.href;
@@ -165,7 +165,7 @@ export default function Navigation() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="nav-break:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
@@ -188,7 +188,7 @@ export default function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass border-t border-white/10"
+            className="nav-break:hidden glass border-t border-white/10"
           >
             <div className="px-4 py-4 space-y-4">
               {navItems.map((item, index) => {
