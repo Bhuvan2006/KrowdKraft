@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 const navItems = [
   { href: "#home", label: "Home" },
   { href: "#about", label: "About" },
+  { href: "/events", label: "Events" },
   { href: "#services", label: "Services" },
   { href: "#community", label: "Community" },
   { href: "#merch", label: "Merch" },
@@ -31,7 +32,7 @@ export default function Navigation() {
       const sections = navItems
         .filter(item => item.href.startsWith("#"))
         .map(item => item.href.substring(1));
-      
+
       const scrollPosition = window.scrollY + 100; // Offset for header height
 
       for (const sectionId of sections) {
@@ -126,9 +127,8 @@ export default function Navigation() {
                 >
                   {item.label}
                   <span
-                    className={`${underline} ${
-                      isActive ? "w-full" : "w-0 group-hover:w-full"
-                    }`}
+                    className={`${underline} ${isActive ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
                   />
                 </Link>
               ) : (
@@ -138,9 +138,8 @@ export default function Navigation() {
                   className={linkClasses}
                 >
                   {item.label}
-                  <span className={`${underline} ${
-                    isActive ? "w-full" : "w-0 group-hover:w-full"
-                  }`} />
+                  <span className={`${underline} ${isActive ? "w-full" : "w-0 group-hover:w-full"
+                    }`} />
                 </button>
               );
             })}
