@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/sections/footer"
 import { supabase } from "@/lib/supabase"
@@ -12,6 +13,7 @@ export default function EventsPage() {
     const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([])
     const [pastEvents, setPastEvents] = useState<Event[]>([])
     const [loading, setLoading] = useState(true)
+    const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming')
 
     useEffect(() => {
         async function getEvents() {
@@ -64,52 +66,91 @@ export default function EventsPage() {
                 </div>
             ) : (
                 <>
-                    {/* Upcoming Events Section */}
-                    <section id="upcoming" className="py-12 bg-secondary/5">
+                    <section className="py-12 min-h-[600px]">
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+
+                            {/* Toggle Switch */}
+                            <div className="flex justify-center mb-16">
+                                <div className="bg-secondary/30 p-1.5 rounded-full flex relative border border-white/5 backdrop-blur-sm">
+                                    <button
+                                        onClick={() => setActiveTab('upcoming')}
+                                        className={`relative z-10 px-8 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 ${activeTab === 'upcoming'
+                                            ? 'text-black'
+                                            : 'text-muted-foreground hover:text-foreground'
+                                            }`}
+                                    >
+                                        Upcoming
+                                        {activeTab === 'upcoming' && (
+                                            <motion.div
+                                                layoutId="activeTab"
+                                                className="absolute inset-0 bg-neon rounded-full -z-10"
+                                                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                            />
+                                        )}
+                                    </button>
+                                    <button
+                                        onClick={() => setActiveTab('past')}
+                                        className={`relative z-10 px-8 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 ${activeTab === 'past'
+                                            ? 'text-black'
+                                            : 'text-muted-foreground hover:text-foreground'
+                                            }`}
+                                    >
+                                        Past
+                                        {activeTab === 'past' && (
+                                            <motion.div
+                                                layoutId="activeTab"
+                                                className="absolute inset-0 bg-neon rounded-full -z-10"
+                                                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                            />
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+
                             <ParallaxWrapper speed={0.2}>
-                                <div className="text-center mb-12">
-                                    <h2 className="text-3xl sm:text-4xl font-bold">
-                                        Upcoming <span className="neon-text">Events</span>
-                                    </h2>
-                                </div>
-
-                                {upcomingEvents.length > 0 ? (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {upcomingEvents.map((event, index) => (
-                                            <EventCard key={event.id} event={event} index={index} />
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="text-center py-12">
-                                        <p className="text-xl text-muted-foreground">No upcoming events at the moment. Stay tuned!</p>
-                                    </div>
-                                )}
-                            </ParallaxWrapper>
-                        </div>
-                    </section>
-
-                    {/* Past Events Section */}
-                    <section id="past" className="py-12">
-                        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                            <ParallaxWrapper speed={0.4}>
-                                <div className="text-center mb-12">
-                                    <h2 className="text-3xl sm:text-4xl font-bold">
-                                        Past <span className="neon-text">Events</span>
-                                    </h2>
-                                </div>
-
-                                {pastEvents.length > 0 ? (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {pastEvents.map((event, index) => (
-                                            <EventCard key={event.id} event={event} index={index} />
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="text-center py-12">
-                                        <p className="text-xl text-muted-foreground">No past events found.</p>
-                                    </div>
-                                )}
+                                <AnimatePresence mode="wait">
+                                    {activeTab === 'upcoming' ? (
+                                        <motion.div
+                                            key="upcoming"
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -20 }}
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            {upcomingEvents.length > 0 ? (
+                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                                    {upcomingEvents.map((event, index) => (
+                                                        <EventCard key={event.id} event={event} index={index} />
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <div className="text-center py-12">
+                                                    <p className="text-xl text-muted-foreground">No upcoming events at the moment. Stay tuned!</p>
+                                                </div>
+                                            )}
+                                        </motion.div>
+                                    ) : (
+                                        <motion.div
+                                            key="past"
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -20 }}
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            {pastEvents.length > 0 ? (
+                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                                    {pastEvents.map((event, index) => (
+                                                        <EventCard key={event.id} event={event} index={index} />
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <div className="text-center py-12">
+                                                    <p className="text-xl text-muted-foreground">No past events found.</p>
+                                                </div>
+                                            )}
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </ParallaxWrapper>
                         </div>
                     </section>

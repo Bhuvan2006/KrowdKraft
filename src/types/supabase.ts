@@ -10,4 +10,5 @@ export interface Event {
     total_seats: number | null;
     registration_deadline: string | null; // date string
     banner_url: string | null;
+    luma_event_url: string | null;
 }
